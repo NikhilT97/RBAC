@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:4000/api',
+  baseURL: 'https://rbac-jraj.onrender.com/api',
 });
 
 // token in every request automatically
