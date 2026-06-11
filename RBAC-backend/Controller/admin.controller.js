@@ -1,37 +1,57 @@
 const Task = require("../Models/task.model");
 const User = require("../Models/user.model");
-const ActivityLog = require("../models/ActivityLog");
+const ActivityLog = require("../Models/activity.logs");
 
 const getAllUsers = async (req, res) => {
-  const users = await User.find().select("-password");
-  res.json(users);
+  try {
+    const users = await User.find().select("-password");
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 };
 
 const deleteUser = async (req, res) => {
-  await User.findByIdAndDelete(req.params.id);
-  res.json({ message: "User deleted" });
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "User deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 };
 
 const updateUserStatus = async (req, res) => {
-  const { status } = req.body; // 'active' or 'inactive'
-  const user = await User.findByIdAndUpdate(
-    req.params.id,
-    { status },
-    { new: true },
-  );
-  res.json(user);
+  try {
+    const { status } = req.body;
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true },
+    );
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 };
 
 const getAllTasks = async (req, res) => {
-  const tasks = await Task.find().populate("createdBy", "name email");
-  res.json(tasks);
+  try {
+    const tasks = await Task.find().populate("createdBy", "userName email");
+    res.json(tasks);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 };
 
 const getActivityLogs = async (req, res) => {
-  const logs = await ActivityLog.find()
-    .populate("user", "name email")
-    .sort({ createdAt: -1 });
-  res.json(logs);
+  try {
+    const logs = await ActivityLog.find()
+      .populate("user", "userName email")
+      .sort({ createdAt: -1 });
+    res.json(logs);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
 };
 
 module.exports = {

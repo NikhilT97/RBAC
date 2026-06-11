@@ -24,11 +24,14 @@ const readOneTask = async (req, res) => {
       _id: taskId,
       createdBy: req.user.id,
     });
+
+
     if (!task) {
       return res.status(400).json({ message: "No tasks found!" });
     }
 
     return res.status(200).json({ message: "Your Task fetched", task });
+
   } catch (error) {
     return res
       .status(500)
@@ -49,17 +52,15 @@ const createTask = async (req, res) => {
 const updateTask = async (req, res) => {
   try {
     const { taskId } = req.params;
-
     const task = await Task.findOneAndUpdate(
       { _id: taskId, createdBy: req.user.id },
       req.body,
-      { new: true },
+      { new: true }
     );
+    if (!task) return res.status(404).json({ message: "Task Not found" });
 
-    if (!task) {
-      return res.status(404).json({ message: "Task Not found" });
-    }
-
+     
+    await logActivity(req.user._id, 'task_updated', `Updated: ${task.task}`);
     res.status(200).json({ message: "Task Updated Successfully", task });
   } catch (error) {
     res.status(500).json({ message: "Not Updated", error: error.message });
@@ -69,15 +70,14 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   try {
     const { taskId } = req.params;
-
     const task = await Task.findOneAndDelete({
       _id: taskId,
-      createdBy: req.user.id,
+      createdBy: req.user.id
     });
+    if (!task) return res.status(404).json({ message: "Task Not Found" });
 
-    if (!task) {
-      return res.status(404).json({ message: "Task Not Found" });
-    }
+    
+    await logActivity(req.user._id, 'task_deleted', `Deleted: ${task.task}`);
     res.status(200).json({ message: "Task Deleted" });
   } catch (error) {
     res.status(500).json({ message: "Unable to Delete", error: error.message });
