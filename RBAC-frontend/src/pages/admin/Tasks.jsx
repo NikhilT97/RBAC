@@ -23,7 +23,7 @@ const Tasks = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this task?')) return;
     try {
-      await API.delete(`/admin/tasks/${id}`);
+      await API.delete(`/admin/task/${id}`);
       fetchTasks();
     } catch (err) {
       console.error(err);
