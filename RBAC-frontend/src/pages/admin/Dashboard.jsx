@@ -1,8 +1,9 @@
-// src/pages/admin/Dashboard.jsx
+
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import API from '../../api/axios';
+import toast from 'react-hot-toast'
 
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
@@ -41,6 +42,7 @@ const AdminDashboard = () => {
 
   const handleLogout = () => {
     logout();
+     toast.success("See you soon Admin 💚");
     navigate('/login');
   };
 

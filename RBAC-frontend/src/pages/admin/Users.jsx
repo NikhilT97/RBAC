@@ -1,7 +1,8 @@
 // src/pages/admin/Users.jsx
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import API from '../../api/axios';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../../api/axios";
+import toast from "react-hot-toast";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -13,7 +14,7 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await API.get('/admin/users');
+      const { data } = await API.get("/admin/users");
       setUsers(data);
     } catch (err) {
       console.error(err);
@@ -21,32 +22,35 @@ const Users = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure?')) return;
+    if (!window.confirm("Are you sure?")) return;
     try {
       await API.delete(`/admin/users/${id}`);
-      fetchUsers(); // refresh list
+      toast.success("User deleted! 💚");
+      fetchUsers();
     } catch (err) {
+      toast.error("Failed to delete user");
       console.error(err);
     }
   };
 
   const handleStatusChange = async (id, currentStatus) => {
-    const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+    const newStatus = currentStatus === "active" ? "inactive" : "active";
     try {
       await API.patch(`/admin/users/${id}/status`, { status: newStatus });
-      fetchUsers(); // refresh list
+      toast.success(` ${newStatus} `);
+      fetchUsers();
     } catch (err) {
+      toast.error(err);
       console.error(err);
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Manage Users</h2>
         <button
-          onClick={() => navigate('/admin')}
+          onClick={() => navigate("/admin")}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Back to Dashboard
@@ -70,20 +74,24 @@ const Users = () => {
                 <td className="p-3">{user.userName}</td>
                 <td className="p-3">{user.email}</td>
                 <td className="p-3">
-                  <span className={`px-2 py-1 rounded text-sm ${
-                    user.role === 'admin' 
-                      ? 'bg-purple-100 text-purple-700' 
-                      : 'bg-blue-100 text-blue-700'
-                  }`}>
+                  <span
+                    className={`px-2 py-1 rounded text-sm ${
+                      user.role === "admin"
+                        ? "bg-purple-100 text-purple-700"
+                        : "bg-blue-100 text-blue-700"
+                    }`}
+                  >
                     {user.role}
                   </span>
                 </td>
                 <td className="p-3">
-                  <span className={`px-2 py-1 rounded text-sm ${
-                    user.status === 'active' 
-                      ? 'bg-green-100 text-green-700' 
-                      : 'bg-red-100 text-red-700'
-                  }`}>
+                  <span
+                    className={`px-2 py-1 rounded text-sm ${
+                      user.status === "active"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                    }`}
+                  >
                     {user.status}
                   </span>
                 </td>
@@ -106,7 +114,6 @@ const Users = () => {
           </tbody>
         </table>
       </div>
-
     </div>
   );
 };

@@ -1,18 +1,16 @@
-
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import API from '../api/axios';
-import toast from 'react-hot-toast'
+import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import API from "../api/axios";
+import toast from "react-hot-toast";
 const Register = () => {
-  
   const [formData, setFormData] = useState({
-    userName: '',
-    email: '',
-    password: '',
-    role: 'user'
+    userName: "",
+    email: "",
+    password: "",
+    role: "user",
   });
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -23,26 +21,26 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
-      await API.post('/auth/signup', formData);
-      toast.success('Signup Successfull 💚')
-      navigate('/login');
+      await API.post("/auth/signup", formData);
+      toast.success("Signup Successfull 💚");
+      navigate("/login");
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Registration failed ⛔')
-      setError(err.response?.data?.message || 'Registration failed ');
+      toast.error(err.response?.data?.message || "Registration failed ⛔");
+      setError(err.response?.data?.message || "Registration failed ");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-
-        <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Register - Task Manager
+        </h2>
 
         {error && (
           <div className="bg-red-100 text-red-600 p-3 rounded mb-4">
@@ -106,17 +104,16 @@ const Register = () => {
             disabled={loading}
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-50"
           >
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
 
         <p className="text-center mt-4 text-sm">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link to="/login" className="text-blue-600 hover:underline">
             Login
           </Link>
         </p>
-
       </div>
     </div>
   );
