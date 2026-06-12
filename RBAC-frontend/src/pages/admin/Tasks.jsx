@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
+import toast from 'react-hot-toast'
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -23,8 +24,10 @@ const Tasks = () => {
     if (!window.confirm("Delete this task?")) return;
     try {
       await API.delete(`/admin/task/${id}`);
+       toast.success("Task Deleted 💚");
       fetchTasks();
     } catch (err) {
+      toast.error(err)
       console.error(err);
     }
   };
