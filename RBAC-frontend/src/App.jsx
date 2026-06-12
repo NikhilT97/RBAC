@@ -12,11 +12,14 @@ import Tasks from './pages/admin/Tasks';
 import ActivityLogs from './pages/admin/ActivityLogs';
 import ProtectedRoute from './components/ProtectedRoute';
  
+import {Toaster} from 'react-hot-toast'
 
 function App() {
       const {user} = useAuth()
-      
+
   return (
+<>
+    <Toaster position="top-right" />
 
     <Routes>
       {/* Public Routes */}
@@ -49,7 +52,7 @@ function App() {
       {/* 404 */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
-
+</>
   );
 }
 
