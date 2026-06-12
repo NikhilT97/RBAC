@@ -1,7 +1,6 @@
-// src/pages/admin/Tasks.jsx
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import API from '../../api/axios';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../../api/axios";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
@@ -13,7 +12,7 @@ const Tasks = () => {
 
   const fetchTasks = async () => {
     try {
-      const { data } = await API.get('/admin/tasks');
+      const { data } = await API.get("/admin/tasks");
       setTasks(data);
     } catch (err) {
       console.error(err);
@@ -21,7 +20,7 @@ const Tasks = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm('Delete this task?')) return;
+    if (!window.confirm("Delete this task?")) return;
     try {
       await API.delete(`/admin/task/${id}`);
       fetchTasks();
@@ -30,15 +29,12 @@ const Tasks = () => {
     }
   };
 
-  
-
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">All Tasks</h2>
         <button
-          onClick={() => navigate('/admin')}
+          onClick={() => navigate("/admin")}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Back to Dashboard
@@ -60,15 +56,15 @@ const Tasks = () => {
             {tasks.map((task) => (
               <tr key={task._id} className="border-t">
                 <td className="p-3">{task.task}</td>
+                <td className="p-3">{task.createdBy?.userName || "Unknown"}</td>
                 <td className="p-3">
-                  {task.createdBy?.userName || 'Unknown'}
-                </td>
-                <td className="p-3">
-                  <span className={`px-2 py-1 rounded text-sm ${
-                    task.status === 'completed'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-yellow-100 text-yellow-700'
-                  }`}>
+                  <span
+                    className={`px-2 py-1 rounded text-sm ${
+                      task.status === "completed"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-yellow-100 text-yellow-700"
+                    }`}
+                  >
                     {task.status}
                   </span>
                 </td>
@@ -88,7 +84,6 @@ const Tasks = () => {
           </tbody>
         </table>
       </div>
-
     </div>
   );
 };
