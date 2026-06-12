@@ -22,11 +22,16 @@ const ActivityLogs = () => {
 
   const getBadgeColor = (action) => {
     switch (action) {
-      case 'login':        return 'bg-blue-100 text-blue-700';
-      case 'task_created': return 'bg-green-100 text-green-700';
-      case 'task_updated': return 'bg-yellow-100 text-yellow-700';
-      case 'task_deleted': return 'bg-red-100 text-red-700';
-      default:             return 'bg-gray-100 text-gray-700';
+      case 'login':        
+      return 'bg-blue-100 text-blue-700';
+      case 'task_created': 
+      return 'bg-green-100 text-green-700';
+      case 'task_updated': 
+      return 'bg-yellow-100 text-yellow-700';
+      case 'task_deleted': 
+      return 'bg-red-100 text-red-700';
+      default:             
+      return 'bg-gray-100 text-gray-700';
     }
   };
 
