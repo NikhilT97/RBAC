@@ -1,15 +1,17 @@
-// src/pages/Register.jsx
+
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import API from '../api/axios';
 
 const Register = () => {
+  
   const [formData, setFormData] = useState({
     userName: '',
     email: '',
     password: '',
     role: 'user'
   });
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();

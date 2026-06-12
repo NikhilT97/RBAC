@@ -23,7 +23,7 @@ taskRoutes.post("/", authorizeRoles("user"), createTask);
 //update
 taskRoutes.patch("/:taskId", authorizeRoles("user"), updateTask);
 
-taskRoutes.delete("/:taskId", authorizeRoles("user"), deleteTask);
+taskRoutes.delete("/:taskId", authorizeRoles("user","admin"), deleteTask);
 
 module.exports = taskRoutes;
 

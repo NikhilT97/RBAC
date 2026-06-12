@@ -23,12 +23,14 @@ const Tasks = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this task?')) return;
     try {
-      await API.delete(`/admin/tasks/${id}`);
+      await API.delete(`/admin/task/${id}`);
       fetchTasks();
     } catch (err) {
       console.error(err);
     }
   };
+
+  
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

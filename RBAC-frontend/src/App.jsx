@@ -11,11 +11,13 @@ import Users from './pages/admin/Users';
 import Tasks from './pages/admin/Tasks';
 import ActivityLogs from './pages/admin/ActivityLogs';
 import ProtectedRoute from './components/ProtectedRoute';
+ 
 
 function App() {
-  const { user } = useAuth();
-
+      const {user} = useAuth()
+      
   return (
+
     <Routes>
       {/* Public Routes */}
       <Route path="/login" element={<Login />} />
@@ -47,6 +49,7 @@ function App() {
       {/* 404 */}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
+
   );
 }
 
