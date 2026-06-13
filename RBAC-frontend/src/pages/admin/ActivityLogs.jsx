@@ -1,7 +1,7 @@
 // src/pages/admin/ActivityLogs.jsx
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import API from '../../api/axios';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../../api/axios";
 
 const ActivityLogs = () => {
   const [logs, setLogs] = useState([]);
@@ -13,7 +13,8 @@ const ActivityLogs = () => {
 
   const fetchLogs = async () => {
     try {
-      const { data } = await API.get('/admin/activity-logs');
+      const { data } = await API.get("/admin/activity-logs");
+      console.log("logs data", data);
       setLogs(data);
     } catch (err) {
       console.error(err);
@@ -22,26 +23,25 @@ const ActivityLogs = () => {
 
   const getBadgeColor = (action) => {
     switch (action) {
-      case 'login':        
-      return 'bg-blue-100 text-blue-700';
-      case 'task_created': 
-      return 'bg-green-100 text-green-700';
-      case 'task_updated': 
-      return 'bg-yellow-100 text-yellow-700';
-      case 'task_deleted': 
-      return 'bg-red-100 text-red-700';
-      default:             
-      return 'bg-gray-100 text-gray-700';
+      case "login":
+        return "bg-blue-100 text-blue-700";
+      case "task_created":
+        return "bg-green-100 text-green-700";
+      case "task_updated":
+        return "bg-yellow-100 text-yellow-700";
+      case "task_deleted":
+        return "bg-red-100 text-red-700";
+      default:
+        return "bg-gray-100 text-gray-700";
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Activity Logs</h2>
         <button
-          onClick={() => navigate('/admin')}
+          onClick={() => navigate("/admin")}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           Back to Dashboard
@@ -68,17 +68,15 @@ const ActivityLogs = () => {
             ) : (
               logs.map((log) => (
                 <tr key={log._id} className="border-t">
+                  <td className="p-3">{log.user?.userName || "Unknown"}</td>
                   <td className="p-3">
-                    {log.user?.userName || 'Unknown'}
-                  </td>
-                  <td className="p-3">
-                    <span className={`px-2 py-1 rounded text-sm ${getBadgeColor(log.action)}`}>
+                    <span
+                      className={`px-2 py-1 rounded text-sm ${getBadgeColor(log.action)}`}
+                    >
                       {log.action}
                     </span>
                   </td>
-                  <td className="p-3 text-gray-600">
-                    {log.details || '-'}
-                  </td>
+                  <td className="p-3 text-gray-600">{log.details || "-"}</td>
                   <td className="p-3 text-gray-500 text-sm">
                     {new Date(log.createdAt).toLocaleString()}
                   </td>
@@ -88,7 +86,6 @@ const ActivityLogs = () => {
           </tbody>
         </table>
       </div>
-
     </div>
   );
 };
