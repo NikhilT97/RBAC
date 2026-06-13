@@ -39,8 +39,8 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div class="relative flex justify-center items-center min-h-screen bg-slate-950 overflow-hidden">
-        <div class="absolute w-96 h-96 bg-violet-600/30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="relative flex justify-center items-center min-h-screen bg-slate-950 overflow-hidden">
+        <div className="absolute w-96 h-96 bg-violet-600/30 rounded-full blur-3xl animate-pulse"></div>
       </div>
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">

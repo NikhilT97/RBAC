@@ -9,7 +9,7 @@ const logger = (req, res, next) => {
     );
   });
 
-  next(); // Always call next() to pass control forward
+  next(); 
 };
 
 
